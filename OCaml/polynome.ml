@@ -56,7 +56,7 @@ let rec produit_poly p q =
 
   ) else (
 
-    let k = (max p.deg q.deg)/2 + 1 in
+    let k = (min p.deg q.deg)/2 + 1 in
 
     let degP0 = min (k-1) p.deg
     and degP1 = max (p.deg - k) (-1)

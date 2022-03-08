@@ -22,7 +22,7 @@ let rec produit_poly p q = match (List.length p)-1, (List.length q)-1 with
 | _, 0 -> List.map (fun x-> x *. List.hd q) p
 | d1, d2 -> (
 
-  let k = (max d1 d2)/2 + 1 in
+  let k = (min d1 d2)/2 + 1 in
 
   let p0, p1 = diviser p (min (k-1) d1)
   and q0, q1 = diviser q (min (k-1) d2) in

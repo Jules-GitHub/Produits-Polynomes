@@ -25,7 +25,7 @@ let rec produit_poly p q = match (List.length p)-1, (List.length q)-1 with
 | _, 0 -> List.map (fun x-> x * List.hd q) p
 | d1, d2 -> (
 
-  let k = (max d1 d2)/2 + 1 in
+  let k = (min d1 d2)/2 + 1 in
 
   let p0, p1 = diviser p (min (k-1) d1)
   and q0, q1 = diviser q (min (k-1) d2) in
@@ -45,7 +45,26 @@ let rec produit_poly p q = match (List.length p)-1, (List.length q)-1 with
 )
 ;;
 
-let p = [1; 1; 1];;
-let q = [0; 5];;
+let rec ajustement_coefficient poly = match poly with
+| t1::t2::q when t1 > 255 -> (t1 mod 256)::(ajustement_coefficient ((t2 + (t1/256))::q))
+| t1::t2::q -> t1::(ajustement_coefficient (t2::q))
+| t::[] when t > 255 -> (t mod 256)::(ajustement_coefficient ((t/256)::[]))
+| t::[] -> t::[]
+| [] -> []
+;;
 
-produit_poly p q;;
+let produit_entiers_longs p q =
+  let prod = produit_poly p q in
+  ajustement_coefficient prod
+;;
+
+let rec entier_to_codage n =
+  if (n = 0) then ( [] )
+  else (
+    (n mod 256)::(entier_to_codage (n/256))
+  )
+;;
+
+let rec codage_to_entier liste = List.fold_right (fun x y -> x + (y*256)) liste 0;;
+
+(produit_entiers_longs (entier_to_codage max_int) (entier_to_codage max_int));;
