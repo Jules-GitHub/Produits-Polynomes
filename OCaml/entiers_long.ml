@@ -58,11 +58,9 @@ let produit_entiers_longs p q =
   ajustement_coefficient prod
 ;;
 
-let rec entier_to_codage n =
-  if (n = 0) then ( [] )
-  else (
-    (n mod 256)::(entier_to_codage (n/256))
-  )
+let rec entier_to_codage n = match n with
+| 0 -> []
+| _ -> (n mod 256)::(entier_to_codage (n/256))
 ;;
 
 let rec codage_to_entier liste = List.fold_right (fun x y -> x + (y*256)) liste 0;;
