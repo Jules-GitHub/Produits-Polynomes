@@ -88,13 +88,13 @@ polynome produit_poly(polynome* p, polynome* q) {
 
     } else {
 
-        int k = max(p->deg/2, q->deg/2) + 1;
+        int k = min(p->deg/2, q->deg/2) + 1;
 
-        int degP0 = min(k-1, p->deg);
-        int degP1 = max(p->deg - k, -1);
+        int degP0 = k-1;
+        int degP1 = p->deg - k;
 
-        int degQ0 = min(k-1, q->deg);
-        int degQ1 = max(q->deg - k, -1);
+        int degQ0 = k-1;
+        int degQ1 = q->deg - k;
 
         polynome p0;
         p0.deg = degP0;
@@ -159,10 +159,10 @@ int main() {
     int d = 2;
 
     polynome p = {.deg = d, .coeff = malloc(sizeof(double)*(d+1))};
-    polynome q = {.deg = d-1, .coeff = malloc(sizeof(double)*(d+1))};
+    polynome q = {.deg = d-1, .coeff = malloc(sizeof(double)*(d))};
     
     p.coeff[0] = 1;
-    p.coeff[1] = 1;
+    p.coeff[1] = 0;
     p.coeff[2] = 1;
 
     q.coeff[0] = 0;
